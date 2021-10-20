@@ -1,4 +1,7 @@
 #include <iostream>
+#include "Perso.h"
+#include "Map.h"
+#include "Physics.h"
 
 using namespace std;
 
