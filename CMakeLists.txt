@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.18)
+
+project(
+  myproject
+  VERSION
+  1.0
+  LANGUAGES
+  CXX
+)
+
+file(GLOB_RECURSE SRC_FILES src/*.cpp)
+add_executable(app ${SRC_FILES})
+target_include_directories(app PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
