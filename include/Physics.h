@@ -9,10 +9,10 @@
 
 class Physics {
 public:
-    void static update(Perso &p, Map map);
+    void static update(Perso *p, Map* map);
 
-    void static inertie(Perso&, Map);
-    void static weight(Perso&, Map);
+    void static inertie(Perso*, Map*);
+    void static weight(Perso*, Map*);
 
     void static getCollisionDist(Perso&, Map);
 };

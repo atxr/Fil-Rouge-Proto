@@ -2,6 +2,7 @@
 #ifndef PERSO_H // include guard
 #define PERSO_H
 
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
@@ -14,6 +15,7 @@ public:
 
     V2 get_position();
     V2 get_speed();
+    sf::RectangleShape get_sprite();
 
     void set_position(V2);
     void set_speed(V2);
