@@ -17,6 +17,8 @@ public:
     V2 get_speed();
     void set_speed(V2);
 
+    void update_sprite();
+
 private:
     std::string m_name;
     V2 m_speed;

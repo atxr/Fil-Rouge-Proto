@@ -36,8 +36,8 @@ int main()
             window.draw(player->get_sprite());
         }
         
-        sf::CircleShape circle = sf::CircleShape(2);
-        circle.setOrigin(2,2);
+        sf::CircleShape circle = sf::CircleShape(1);
+        circle.setOrigin(1,1);
         circle.setFillColor(sf::Color::Yellow);
         for (auto wall: map.get_walls()) {
             window.draw(wall->get_sprite());

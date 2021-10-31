@@ -14,3 +14,7 @@ V2 Perso::get_speed() { return m_speed; }
 
 void Perso::set_speed(V2 speed) { m_speed = speed; }
 
+void Perso::update_sprite() {
+    m_sprite->setPosition(m_pos.get_x(), m_pos.get_y());
+}
+
