@@ -1,3 +1,5 @@
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/Color.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -32,12 +34,17 @@ int main()
         map.update();
         for (auto player: map.get_persos()) {
             window.draw(player->get_sprite());
-            cout << player->get_position().get_x() << " " << player->get_position().get_y() << endl;
         }
-
+        
+        sf::CircleShape circle = sf::CircleShape(2);
+        circle.setOrigin(2,2);
+        circle.setFillColor(sf::Color::Yellow);
         for (auto wall: map.get_walls()) {
             window.draw(wall->get_sprite());
-            cout << wall->get_position().get_x() << " " << wall->get_position().get_y() << endl;
+            for (auto p: wall->get_hitbox().get_points()) {
+                circle.setPosition(p.get_x(), p.get_y());
+                window.draw(circle);
+            }
         }
 
         window.display();
