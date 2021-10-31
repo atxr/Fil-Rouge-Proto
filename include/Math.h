@@ -25,7 +25,7 @@ private:
 class Hitbox {
 public:
     Hitbox();
-    Hitbox(V2 center, V2 size, int n);
+    Hitbox(V2 center, V2 size, float delta);
 
     std::vector<V2> get_points();
 

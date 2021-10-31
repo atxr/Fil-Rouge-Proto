@@ -18,7 +18,7 @@ V2 V2::mul(float a) {
 }
 
 Hitbox::Hitbox() {}
-Hitbox::Hitbox(V2 center, V2 size, int n) :
+Hitbox::Hitbox(V2 center, V2 size, float delta) :
     direction(V2(0, 1))
 {
     points = {};
@@ -28,18 +28,17 @@ Hitbox::Hitbox(V2 center, V2 size, int n) :
     float lx = size.get_x();
     float ly = size.get_y();
 
-    std::cout << lx << " " << ly << std::endl;
-
-    for (float i=0; 4*i<n; i++) {
-        points.push_back(
-                V2(x0 + (lx/2)*(8*i/n -1), y0 - ly/2));
-        points.push_back(
-                V2(x0 + (lx/2)*(8*i/n -1), y0 + ly/2));
-        points.push_back(
-                V2(x0 - (lx/2), y0 + (ly/2)*(8*i/n -1)));
-        points.push_back(
-                V2(x0 + (lx/2), y0 + (ly/2)*(8*i/n -1)));
+    for (float i=-lx/2; i<lx/2; i+=delta) {
+        points.push_back(V2(x0 + i, y0 - ly/2));
+        points.push_back(V2(x0 + i, y0 + ly/2));
     }
+    for (float j=-ly/2; j<ly/2; j+=delta) {
+        points.push_back(V2(x0 - lx/2, y0 + j));
+        points.push_back(V2(x0 + lx/2, y0 + j));
+    }
+
+    // Right bottom corner
+    points.push_back(V2(x0+lx/2, y0+ly/2));
     
 }
 

@@ -11,7 +11,7 @@ Component::Component(V2 position, sf::RectangleShape* sprite)
 
     std::cout << sprite->getSize().x << std::endl;
     V2 center = position.add(V2(sprite->getSize().x/2, sprite->getSize().y/2));
-    this->hitbox = Hitbox(center, V2(sprite->getSize().x, sprite->getSize().y), 100);
+    this->hitbox = Hitbox(center, V2(sprite->getSize().x, sprite->getSize().y), 4);
 }
 
 V2 Component::get_position() { return m_pos; }
