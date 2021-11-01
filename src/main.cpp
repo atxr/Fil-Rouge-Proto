@@ -1,6 +1,8 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Clock.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -21,22 +23,60 @@ int main()
     map.add_perso(new Perso);
     map.add_wall(new Wall);
     
-    int i=0;
-
     sf::Clock timer_fps;
-    float FPS = 50;
+    float FPS = 60;
 
     while (window.isOpen())
     {
         float ft = timer_fps.restart().asMilliseconds();
-        if (ft > 1000/FPS)
-            cout << "Frame time low: " << ft << "ms instead of " << 1000/FPS << endl;
+//      if (ft > 1000/FPS)
+//          cout << "Frame time low: " << ft << "ms instead of " << 1000/FPS << endl;
 
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch (event.type) {
+                // window closed
+                case sf::Event::Closed:
+                    window.close();
+                    break;
+
+                // key pressed
+                case sf::Event::KeyPressed:
+                {
+                    if (event.key.code == sf::Keyboard::Up) {
+                        map.get_persos()[0]->set_jump(true);
+                    }
+
+                    if (event.key.code == sf::Keyboard::Left) {
+                        map.get_persos()[0]->set_left(true);
+                    }
+
+                    if (event.key.code == sf::Keyboard::Right) {
+                        map.get_persos()[0]->set_right(true);
+                    }
+
+                    break;
+                }
+
+                // key released
+                case sf::Event::KeyReleased:
+                {
+                    if (event.key.code == sf::Keyboard::Left) {
+                        map.get_persos()[0]->set_left(false);
+                    }
+
+                    if (event.key.code == sf::Keyboard::Right) {
+                        map.get_persos()[0]->set_right(false);
+                    }
+
+                    break;
+                }
+
+                // we don't process other types of events
+                default:
+                    break;
+            }
         }
 
         window.clear();
@@ -65,11 +105,6 @@ int main()
         }
 
         window.display();
-        i++;
-        if (i==100) {
-            cout << "jump" << endl;
-            map.get_persos()[0]->set_jump(true);
-        }
 
         while (timer_fps.getElapsedTime().asMilliseconds() < 1000/FPS) {}
     }

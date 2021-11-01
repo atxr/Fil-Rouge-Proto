@@ -16,8 +16,12 @@ public:
 
     V2 get_speed();
     bool get_jump();
+    bool get_left();
+    bool get_right();
     void set_speed(V2);
     void set_jump(bool);
+    void set_left(bool);
+    void set_right(bool);
 
     void update_sprite();
 
@@ -25,6 +29,8 @@ private:
     std::string m_name;
     V2 m_speed;
     bool jump;
+    bool right;
+    bool left;
 };
 
 #endif /* PERSO_H */

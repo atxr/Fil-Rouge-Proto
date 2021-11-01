@@ -20,6 +20,5 @@ void Map::add_wall(Wall *w) {
 void Map::update() {
     for (auto p: m_persos) {
         Physics::update(p, this);
-        p->update_sprite(); // TODO bad
     }
 }

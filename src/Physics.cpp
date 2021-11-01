@@ -5,14 +5,24 @@
 
 void Physics::update(Perso *p, Map *map) {
     V2 prev = V2(p->get_position());
-
+    
     if (p->get_jump()) {
         jump(p, map);
-    }
+    } 
+
+    // Physics
     weight(p, map); 
     inertie(p, map);
 
     p->set_speed(p->get_position().add(prev.mul(-1)));
+
+    // Controls
+    // TODO Here ???
+    if (p->get_left()) {
+        left(p, map);
+    } else if (p->get_right()) {
+        right(p, map);
+    }
 }
 
 void Physics::jump(Perso *p, Map *m) {
@@ -26,8 +36,25 @@ void Physics::jump(Perso *p, Map *m) {
     p->set_jump(false);
 }
 
+// TODO shorter left/right
+void Physics::right(Perso *p, Map *m) {
+    float j = 5;
+    V2 mov = V2(j, 0);
+
+    V2 cor = correctionCollision(mov, p, m);
+    p->set_position(p->get_position().add(cor));
+}
+
+void Physics::left(Perso *p, Map *m) {
+    float j = 5;
+    V2 mov = V2(-j, 0);
+
+    V2 cor = correctionCollision(mov, p, m);
+    p->set_position(p->get_position().add(cor));
+}
+
 void Physics::weight(Perso *p, Map *map) {
-    float g = 0.1;
+    float g = 0.4;
     V2 mov = V2(0,g);
 
     V2 cor = correctionCollision(mov, p, map);
@@ -54,7 +81,6 @@ V2 Physics::correctionCollision(V2 mov, Perso* p, Map* m) {
     // if collision
     float epsilon = 1e-4;
     if (min != mov.norm()) { 
-        assert(epsilon < min);
         min -= epsilon; // avoid tp inside the wall
     }
 
