@@ -1,6 +1,7 @@
 #include "Physics.h"
 #include <iostream>
 #include <vector>
+#include <assert.h>
 
 void Physics::update(Perso *p, Map *map) {
     V2 prev = V2(p->get_position());
@@ -9,13 +10,13 @@ void Physics::update(Perso *p, Map *map) {
         jump(p, map);
     }
     weight(p, map); 
-    //inertie(p, map);
+    inertie(p, map);
 
     p->set_speed(p->get_position().add(prev.mul(-1)));
 }
 
 void Physics::jump(Perso *p, Map *m) {
-    float j = 1.5;
+    float j = 6;
     V2 mov = V2(0, -j);
 
     V2 cor = correctionCollision(mov, p, m);
@@ -26,12 +27,10 @@ void Physics::jump(Perso *p, Map *m) {
 }
 
 void Physics::weight(Perso *p, Map *map) {
-    //float g = 5e-3;
-    float g = 1;
+    float g = 0.1;
     V2 mov = V2(0,g);
 
     V2 cor = correctionCollision(mov, p, map);
-    std::cout << mov.get_y() << " " << cor.get_y() << std::endl;
     p->set_position(p->get_position().add(cor));
 }
 
@@ -45,15 +44,19 @@ void Physics::inertie(Perso *p, Map *map) {
 
 V2 Physics::correctionCollision(V2 mov, Perso* p, Map* m) {
     float min = mov.norm();
-    std::cout << "mouv: " << min << " ";
     for (auto wall: m->get_walls()) {
         for (auto pts: p->get_hitbox().get_points()) {
             float col = rayRectangle(pts, pts.add(mov), wall->get_hitbox().get_rectangle());
-            //std::cout << col << " " ;
             min = (col != -1 && col<min) ? col : min;
         }
     }
-    std::cout << min << std::endl;
+
+    // if collision
+    float epsilon = 1e-4;
+    if (min != mov.norm()) { 
+        assert(epsilon < min);
+        min -= epsilon; // avoid tp inside the wall
+    }
 
     return mov.direction().mul(min);
 }
@@ -88,7 +91,6 @@ float Physics::rayRectangle(V2 xa, V2 xb, std::vector<V2> rect) {
     for (int i=0; i<4; i++) {
         float min = rayLine(xa, xb, rect[i], rect[(i+1)%4]);
         if (i==0)
-            std::cout << min << " " ;
         col = (col == -1 || (min != -1 && min < col)) ? min : col; 
     }
 

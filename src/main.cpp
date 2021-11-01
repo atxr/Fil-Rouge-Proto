@@ -1,5 +1,6 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Clock.hpp>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <vector>
@@ -22,8 +23,15 @@ int main()
     
     int i=0;
 
+    sf::Clock timer_fps;
+    float FPS = 50;
+
     while (window.isOpen())
     {
+        float ft = timer_fps.restart().asMilliseconds();
+        if (ft > 1000/FPS)
+            cout << "Frame time low: " << ft << "ms instead of " << 1000/FPS << endl;
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -59,8 +67,11 @@ int main()
         window.display();
         i++;
         if (i==100) {
-            //map.get_persos()[0]->set_jump(true);
+            cout << "jump" << endl;
+            map.get_persos()[0]->set_jump(true);
         }
+
+        while (timer_fps.getElapsedTime().asMilliseconds() < 1000/FPS) {}
     }
 	return 0;
 }
