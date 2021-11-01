@@ -19,6 +19,8 @@ int main()
     Map map = Map();
     map.add_perso(new Perso);
     map.add_wall(new Wall);
+    
+    int i=0;
 
     while (window.isOpen())
     {
@@ -48,6 +50,11 @@ int main()
         }
 
         window.display();
+        i++;
+        cout << i << endl;
+        if (i==100) {
+            map.get_persos()[0]->set_jump(true);
+        }
     }
 	return 0;
 }

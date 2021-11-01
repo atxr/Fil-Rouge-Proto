@@ -15,13 +15,16 @@ public:
     Perso(std::string name, V2 position, sf::RectangleShape* sprite);
 
     V2 get_speed();
+    bool get_jump();
     void set_speed(V2);
+    void set_jump(bool);
 
     void update_sprite();
 
 private:
     std::string m_name;
     V2 m_speed;
+    bool jump;
 };
 
 #endif /* PERSO_H */

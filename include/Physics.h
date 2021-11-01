@@ -11,6 +11,7 @@ class Physics {
 public:
     void static update(Perso *p, Map* map);
 
+    void static jump(Perso*, Map*);
     void static inertie(Perso*, Map*);
     void static weight(Perso*, Map*);
 
