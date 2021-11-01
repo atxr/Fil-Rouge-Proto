@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <vector>
 #include "Math.h"
 #include "Map.h"
 #include "Perso.h"
@@ -15,7 +16,9 @@ public:
     void static inertie(Perso*, Map*);
     void static weight(Perso*, Map*);
 
-    void static getCollisionDist(Perso&, Map);
+    V2 static correctionCollision(V2, Perso*, Map*);
+    float static rayLine(V2 xa, V2 xb, V2 ya, V2 yb);
+    float static rayRectangle(V2 xa, V2 xb, std::vector<V2>);
 };
 
 #endif

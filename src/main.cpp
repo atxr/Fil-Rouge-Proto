@@ -34,13 +34,20 @@ int main()
         window.clear();
 
         map.update();
-        for (auto player: map.get_persos()) {
-            window.draw(player->get_sprite());
-        }
-        
+
         sf::CircleShape circle = sf::CircleShape(1);
         circle.setOrigin(1,1);
         circle.setFillColor(sf::Color::Yellow);
+        
+        for (auto player: map.get_persos()) {
+            window.draw(player->get_sprite());
+
+            for (auto p: player->get_hitbox().get_points()) {
+                circle.setPosition(p.get_x(), p.get_y());
+                window.draw(circle);
+            }
+        }
+        
         for (auto wall: map.get_walls()) {
             window.draw(wall->get_sprite());
             for (auto p: wall->get_hitbox().get_points()) {
@@ -51,9 +58,8 @@ int main()
 
         window.display();
         i++;
-        cout << i << endl;
         if (i==100) {
-            map.get_persos()[0]->set_jump(true);
+            //map.get_persos()[0]->set_jump(true);
         }
     }
 	return 0;

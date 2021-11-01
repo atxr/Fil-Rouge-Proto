@@ -13,6 +13,7 @@ public:
     float get_y();
 
     V2 add(V2 a);
+    V2 sub(V2 a);
     V2 mul(float a);
     float norm();
     V2 direction();
@@ -28,10 +29,14 @@ public:
     Hitbox(V2 center, V2 size, float delta);
 
     std::vector<V2> get_points();
+    std::vector<V2> get_rectangle();
+
+    void move(V2);
+
 
 private:
-    V2 direction; // useless ???
     std::vector<V2> points;
+    std::vector<V2> rect;
 };
 
 #endif
